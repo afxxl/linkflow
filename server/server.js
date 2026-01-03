@@ -37,13 +37,22 @@ app.use('/api/auth', authRoutes);
 app.use('/api/links', linkRoutes);
 app.use('/api/analytics', analyticsRoutes);
 
-// Public routes (must be last to avoid conflicts)
-app.use('/', publicRoutes);
+// Root route for API
+app.get('/', (req, res) => {
+    res.json({
+        success: true,
+        message: 'LinkFlow API is running',
+        version: '1.0.0'
+    });
+});
 
 // Health check
 app.get('/health', (req, res) => {
     res.json({ success: true, message: 'Server is running' });
 });
+
+// Public routes (must be last to avoid conflicts)
+app.use('/', publicRoutes);
 
 // Error handler (must be last)
 app.use(errorHandler);
